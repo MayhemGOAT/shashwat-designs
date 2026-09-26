@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env
+.env.*
+.agents
+.claude
+.cursor
+garden-gpt-image-2
+skills-lock.json
+*.log
