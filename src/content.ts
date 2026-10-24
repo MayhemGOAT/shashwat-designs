@@ -1,101 +1,157 @@
+const whatsapp = (phone: string, text: string) =>
+  `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`
+
 export const brand = {
   name: 'AppleToe',
-  shortName: 'AppleToe',
   legalName: 'AppleToe Productions',
-  tagline: 'Stills and reels for underground artists — flash, cut, post.',
+  motto: 'Shoot. Cut. Post.',
   headline: 'Make them look inevitable.',
-  logoSrc: '/assets/appletoe-brand/logo-real.png',
+  lede: 'Photography and video by Shashwat Sagar for underground rappers, indie artists, and brands. Music videos, reels, covers.',
+  markSrc: '/assets/brand/reel-mark.png',
+  markLineSrc: '/assets/brand/reel-line.png',
   heroStill: '/assets/appletoe-brand/still-hero-reel.png',
 }
-
-export const services = [
-  {
-    title: 'Artist shoots',
-    body: 'Night portraits, cover stills, and session photos that hold up on a phone and on a flyer.',
-  },
-  {
-    title: 'Reels & content',
-    body: 'Short-form cuts for artists who need constant drops — raw energy, tight turnaround.',
-  },
-  {
-    title: 'Music videos',
-    body: 'Story-driven videos with underground rappers and indie acts — from treatment to final grade.',
-  },
-  {
-    title: 'Podcasts',
-    body: 'Studio-quality conversations — capture, cut, and package episodes that still feel live.',
-  },
-] as const
-
-export const works = [
-  {
-    title: 'Tanashahi',
-    credit: 'By Eleven Eleven',
-    still: '/assets/appletoe-brand/still-01-tanashahi.png',
-  },
-  {
-    title: 'Bad Indians',
-    credit: 'By Eleven Eleven',
-    still: '/assets/appletoe-brand/still-02-bad-indians.png',
-  },
-  {
-    title: 'Expectations',
-    credit: 'Voicenote03 by Divyansh Verma',
-    still: '/assets/appletoe-brand/still-03-expectations.png',
-  },
-  {
-    title: 'Homework',
-    credit: 'Sxnchay and Unfuckman',
-    still: '/assets/appletoe-brand/still-04-homework.png',
-  },
-  {
-    title: 'Faraq Padta Nahi',
-    credit: 'Eleven Eleven',
-    still: '/assets/appletoe-brand/still-05-faraq.png',
-  },
-  {
-    title: 'Theher Ja',
-    credit: 'Divyansh Verma',
-    still: '/assets/appletoe-brand/still-06-theher.png',
-  },
-  {
-    title: 'Aao Na',
-    credit: 'Divyansh Verma',
-    still: '/assets/appletoe-brand/still-07-aao-na.png',
-  },
-] as const
 
 export const contacts = {
   founder: {
     name: 'Shashwat Sagar',
-    role: 'Photographer · Videographer',
+    role: 'Founder · Photographer · Videographer',
     phone: '+91 8799715131',
     phoneHref: 'tel:+918799715131',
-    whatsappHref:
-      'https://api.whatsapp.com/send/?phone=918799715131&text=Hey%20Shashwat!%20I%27d%20love%20to%20discuss%20a%20shoot%20/%20reel.',
+    whatsappNumber: '918799715131',
+    whatsappHref: whatsapp('918799715131', "Hey Shashwat! I'd love to discuss a shoot / reel."),
     email: 'shashwatsagarphoto@gmail.com',
     emailHref: 'mailto:shashwatsagarphoto@gmail.com',
     instagram: '@shashwatsagarr',
     instagramHref: 'https://instagram.com/shashwatsagarr',
   },
   studio: {
-    name: 'AppleToe',
+    name: 'AppleToe Productions',
+    role: 'Music videos · Podcasts · Short films',
     phone: '+91 9650562234',
     phoneHref: 'tel:+919650562234',
-    whatsappHref:
-      'https://api.whatsapp.com/send?phone=919650562234&text=Hey%20AppleToe!%20I%20have%20a%20music%20video%20/%20podcast%20/%20film%20project.',
+    whatsappNumber: '919650562234',
+    whatsappHref: whatsapp('919650562234', 'Hey AppleToe! I have a music video / podcast / film project.'),
     email: 'appletoeproductions@gmail.com',
     emailHref: 'mailto:appletoeproductions@gmail.com',
     instagram: '@appletoe.co',
-    instagramHref: 'https://instagram.com/appletoe.co',
+    instagramHref: 'https://www.instagram.com/appletoe.co',
   },
 }
 
-export const quotes = [
-  { who: 'Eleven Eleven', text: 'Night shoots that actually look expensive on a phone.' },
-  { who: 'Divyansh Verma', text: 'Reels cut fast without looking cheap.' },
-  { who: 'Sxnchay', text: 'Flash, grit, and frames that hold on a cover.' },
-  { who: 'Unfuckman', text: 'The guy you call when the track needs a face.' },
-  { who: 'AppleToe desk', text: 'Shoot. Cut. Post. Repeat.' },
-  { who: 'Delhi nights', text: 'Underground energy, studio discipline.' },
-] as const
+type Desk = keyof typeof contacts
+
+const service = (title: string, body: string, formats: string, desk: Desk) => ({
+  title,
+  body,
+  formats,
+  href: whatsapp(contacts[desk].whatsappNumber, `Hey ${desk === 'founder' ? 'Shashwat' : 'AppleToe'}! I want to book: ${title}.`),
+})
+
+export const services = [
+  service(
+    'Artist shoots',
+    'Night portraits, cover stills, and session photos that hold up on a phone and on a flyer.',
+    'Covers · Press · Sessions',
+    'founder',
+  ),
+  service(
+    'Reels & content',
+    'Short-form cuts for artists who need constant drops. Raw energy, tight turnaround.',
+    '9:16 · Shorts · Drops',
+    'founder',
+  ),
+  service(
+    'Music videos',
+    'Story-driven videos with underground rappers and indie acts, from treatment to final grade.',
+    'Treatment → Grade',
+    'studio',
+  ),
+  service(
+    'Short films',
+    'Stories shot with a sharp eye for detail and narrative flow, built to stay with people after the credits.',
+    'Script · Shoot · Post',
+    'studio',
+  ),
+  service(
+    'Podcasts',
+    'Studio-quality conversations. Capture, cut, and package episodes that still feel live.',
+    'Multi-cam · Audio · Clips',
+    'studio',
+  ),
+]
+
+type Work = {
+  title: string
+  artists: string[]
+  label?: string
+  youtubeId: string
+  still: string
+  focus?: string
+}
+
+export const works: Work[] = [
+  {
+    title: 'Tanashahi',
+    artists: ['Insane', 'Moulik'],
+    label: 'Eleven Eleven',
+    youtubeId: 'Kqipd4tNiLU',
+    still: '/assets/work/tanashahi.jpg',
+  },
+  {
+    title: 'Homework',
+    artists: ['Sxnchay', 'Unfuckman'],
+    youtubeId: 'JP-2tUc2v2c',
+    still: '/assets/work/homework.jpg',
+  },
+  {
+    title: 'Theher Ja',
+    artists: ['Divyansh Verma'],
+    youtubeId: 'vWwq5s-8CgM',
+    still: '/assets/work/theher-ja.jpg',
+  },
+  {
+    title: 'Aao Na',
+    artists: ['Divyansh Verma', 'Ameeshi Bhatnagar'],
+    youtubeId: 'vcbz70ue1do',
+    still: '/assets/work/aao-na.jpg',
+  },
+  {
+    title: 'Aake Milo',
+    artists: ['Vyaas', 'Khushi Bajotra'],
+    label: 'Eleven Eleven',
+    youtubeId: '90rG5SQhwYw',
+    still: '/assets/work/aake-milo.jpg',
+    focus: '50% 18%',
+  },
+  {
+    title: 'Memories',
+    artists: ['Floki', 'Dhadkan'],
+    label: 'Eleven Eleven',
+    youtubeId: 'KnZKYVYzMUU',
+    still: '/assets/work/memories.jpg',
+  },
+  {
+    title: 'Farak Padta Nahi',
+    artists: ['Vyaas', 'Insane'],
+    label: 'Eleven Eleven',
+    youtubeId: 'uWdZzY56PZg',
+    still: '/assets/work/farak-padta-nahi.jpg',
+    focus: '50% 25%',
+  },
+]
+
+export const credit = (w: Work) => w.artists.join(' & ')
+
+export const artists = [...new Set(works.flatMap((w) => w.artists))]
+
+export const reels = [
+  { id: 'DZKleGQImx0', account: '@freefireindiaofficial', client: 'Free Fire India' },
+  { id: 'DYABscwxKLi', account: '@taraano_ka_zikr', client: 'Taraano Ka Zikr' },
+  { id: 'DZMG3HCT9lq', account: '@freefireindiaofficial', client: 'Free Fire India' },
+  { id: 'DWHKH0yDzkO', account: '@rohanmagic × @flipsyde.in', client: 'Rohan Magic × Flipsyde' },
+].map((r) => ({
+  ...r,
+  href: `https://www.instagram.com/reel/${r.id}/`,
+  embed: `https://www.instagram.com/reel/${r.id}/embed/`,
+}))

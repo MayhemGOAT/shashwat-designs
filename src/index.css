@@ -11,6 +11,12 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--rc-void);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h);
 }
 
 img,

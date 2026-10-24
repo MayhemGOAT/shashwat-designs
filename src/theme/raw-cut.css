@@ -1,0 +1,52 @@
+/* AppleToe — Raw Cut tokens. See brand-spec.md. */
+:root {
+  --rc-void: #0a0a0a;
+  --rc-surface: #141210;
+  --rc-ink: #f2ede4;
+  --rc-ink-soft: rgba(242, 237, 228, 0.78);
+  --rc-mute: #8a8478;
+  --rc-line: #2a2722;
+  --rc-flash: #e8ff47;
+  --rc-heat: #ff4d2a;
+  --rc-grain: rgba(242, 237, 228, 0.04);
+  --rc-veil: rgba(10, 10, 10, 0.72);
+  --rc-veil-deep: rgba(10, 10, 10, 0.94);
+
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --text-meta: 0.75rem;
+  --text-small: 0.875rem;
+  --text-body: 1.0625rem;
+  --text-lead: clamp(1.75rem, 1rem + 2.4vw, 3rem);
+  --text-frame: clamp(1.5rem, 1.1rem + 0.8vw, 2rem);
+  --text-row: clamp(2.5rem, 1.6rem + 3vw, 4.5rem);
+  --text-section: clamp(3.5rem, 2rem + 6vw, 8rem);
+  --text-mark: 31vw;
+  --tracking-meta: 0.12em;
+  --leading-tight: 0.9;
+  --leading-body: 1.55;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 160px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --nav-h: 64px;
+  --sprocket: 10px;
+
+  --radius: 0;
+  --rule: 1px solid var(--rc-line);
+  --rule-accent: 2px solid var(--rc-flash);
+
+  --dur-ui: 200ms;
+  --dur-draw: 250ms;
+  --dur-hero: 800ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
