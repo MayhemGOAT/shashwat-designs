@@ -6,7 +6,7 @@ export const brand = {
   legalName: 'AppleToe Productions',
   motto: 'Shoot. Cut. Post.',
   headline: 'Make them look inevitable.',
-  lede: 'Photography and video by Shashwat Sagar for underground rappers, indie artists, and brands. Music videos, reels, covers.',
+  lede: 'Music videos, reels, and covers for underground rappers, indie artists, and brands. Shot and cut by Shashwat Sagar.',
   markSrc: '/assets/brand/reel-mark.png',
   markLineSrc: '/assets/brand/reel-line.png',
   heroStill: '/assets/appletoe-brand/still-hero-reel.png',
