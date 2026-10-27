@@ -119,7 +119,7 @@ function SoundToggle({ on, onToggle, className = '' }: { on: boolean; onToggle: 
         <i />
         <i />
       </span>
-      Sound {on ? 'on' : 'off'}
+      <span className="sound__label">Sound {on ? 'on' : 'off'}</span>
     </button>
   )
 }
@@ -151,6 +151,7 @@ export default function Home({ pack }: { pack?: SoundPack }) {
   const [bookInView, setBookInView] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
   const [flashKey, setFlashKey] = useState(0)
+  const [menuOpen, setMenuOpen] = useState(false)
   const sound = useSound(pack)
   const strip = [...works, ...works]
 
@@ -169,6 +170,18 @@ export default function Home({ pack }: { pack?: SoundPack }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false)
+    const onResize = () => window.matchMedia('(min-width: 641px)').matches && setMenuOpen(false)
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [menuOpen])
 
   useEffect(() => {
     const el = bookRef.current
@@ -193,7 +206,7 @@ export default function Home({ pack }: { pack?: SoundPack }) {
         Skip to work
       </a>
 
-      <nav className={`nav${solidNav ? ' is-solid' : ''}`} aria-label="Primary">
+      <nav className={`nav${solidNav || menuOpen ? ' is-solid' : ''}`} aria-label="Primary">
         <a className="nav__brand" href="#top" aria-label={`${brand.legalName}, back to top`}>
           <ReelMark className="nav__reel" />
           <span>{brand.name}</span>
@@ -206,8 +219,43 @@ export default function Home({ pack }: { pack?: SoundPack }) {
           <a className="nav__book" href="#book">
             Book
           </a>
+          <button
+            type="button"
+            className="nav__menu"
+            aria-expanded={menuOpen}
+            aria-controls="menu"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? 'Close' : 'Menu'}
+          </button>
         </div>
       </nav>
+
+      <div className={`menu${menuOpen ? ' is-open' : ''}`} id="menu" inert={!menuOpen}>
+        <ul className="menu__links">
+          {[
+            ['#work', 'Work'],
+            ['#reels', 'Reels'],
+            ['#services', 'Services'],
+            ['#book', 'Book'],
+          ].map(([href, label], i) => (
+            <li key={href}>
+              <a href={href} onClick={() => setMenuOpen(false)}>
+                <span>{pad(i + 1)}</span>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="menu__foot">
+          <a href={contacts.founder.whatsappHref} target="_blank" rel="noreferrer">
+            WhatsApp ↗
+          </a>
+          <a href={contacts.founder.instagramHref} target="_blank" rel="noreferrer">
+            {contacts.founder.instagram} ↗
+          </a>
+        </div>
+      </div>
 
       <header className="hero" id="top">
         <img className="hero__img" src={brand.heroStill} alt="" fetchPriority="high" />
@@ -354,6 +402,9 @@ export default function Home({ pack }: { pack?: SoundPack }) {
                 <div className="reel__screen">
                   <iframe src={r.embed} title={`Instagram reel for ${r.client}`} loading="lazy" scrolling="no" />
                 </div>
+                <a className="reel__watch" href={r.href} target="_blank" rel="noreferrer">
+                  Watch on Instagram ↗
+                </a>
               </li>
             ))}
           </ul>
